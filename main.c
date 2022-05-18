@@ -12,8 +12,10 @@
 
 #include "philo.h"
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	puts("coucou je suis le main");
+	(void) argv;
+	if (argc != 5 && argc != 6)
+		puts("Pas le bon nombre d'argument !");
 	return (0);
 }

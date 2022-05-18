@@ -3,7 +3,7 @@ CFLAGS = -Wall -Werror -Wextra
 SANI = -g -fsanitize=address
 NAME = philo
 INC_PATH = includes/
-SRC = main.c 
+SRC = main.c init.c utils.c
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
@@ -44,7 +44,7 @@ fclean : clean
 re : fclean all
 
 test : $(NAME)
-	@echo "$(OK_COLOR)"
+	@echo -e "$(OK_COLOR)"
 	@echo "" && ./philo && echo ""
 
 .PHONY : all fclean clean re test
