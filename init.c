@@ -6,11 +6,22 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/18 21:51:58 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:52:17 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	free_table(t_table *table)
+{
+	free(table->forks);
+	free(table);
+}
+
+void	free_philos(t_philo *philos)
+{
+	free(philos);
+}
 
 static int	*init_forks(int n)
 {
@@ -46,7 +57,7 @@ t_philo	*init_philos(t_table *table)
 	t_philo	*philos;
 	int		i;
 
-	philos = malloc(sizeof(t_philo) * table->nb_philo);
+	philos = malloc(sizeof(t_philo) * (table->nb_philo));
 	i = -1;
 	while (++i < table->nb_philo)
 	{

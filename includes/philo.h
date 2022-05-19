@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/18 21:34:55 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/19 21:52:25 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdlib.h>
 
 typedef struct s_table {
-	long	nb_philo;
+	int		nb_philo;
 	int		*forks;
 	int		is_death;
 	long	time_to_die;
@@ -38,5 +38,11 @@ typedef struct s_philo {
 	int		fork_l;
 }	t_philo;
 
-int	ft_atoi(const char *s);
+t_table	*init_table(int eat_limit, char **args);
+t_philo	*init_philos(t_table *table);
+
+void	free_table(t_table *table);
+void	free_philos(t_philo *philos);
+
+int		ft_atoi(const char *s);
 #endif 
