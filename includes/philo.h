@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/19 21:52:25 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:30:44 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include <stdio.h>
 # include <pthread.h>
 # include <stdlib.h>
+# include <sys/time.h>
+# define ULONG unsigned long
 
 typedef struct s_table {
 	int		nb_philo;
@@ -43,6 +45,8 @@ t_philo	*init_philos(t_table *table);
 
 void	free_table(t_table *table);
 void	free_philos(t_philo *philos);
+
+ULONG	get_time(void);
 
 int		ft_atoi(const char *s);
 #endif 

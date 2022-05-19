@@ -3,7 +3,7 @@ CFLAGS = -Wall -Werror -Wextra
 SANI = -g -fsanitize=address
 NAME = philo
 INC_PATH = includes/
-SRC = main.c init.c utils.c
+SRC = main.c init.c utils.c time.c
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)

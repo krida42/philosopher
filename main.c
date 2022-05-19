@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:53:41 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/19 21:52:41 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/19 23:41:27 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 void	describe_table(t_table *table, t_philo	*philos)
 {
-	int	i = 2;
+	const int	i = 2;
+
 	printf("id: %d\n", philos[i].id);
 	printf("time to die : %ld\n", philos[i].time_to_die);
 	printf("time to eat : %ld\n", philos[i].time_to_eat);
 	printf("time to sleep : %ld\n", philos[i].time_to_sleep);
 	printf("nb times : %ld\n", philos[i].time_to_eat);
+	printf("time now in ms : %lu\n", get_time());
 	(void) philos;
 	(void) table;
 }
