@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/20 16:50:35 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/20 22:32:12 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,18 @@
 
 void	free_table(t_table *table)
 {
+	pthread_mutex_destroy(&table->mutex_forks);
 	free(table->forks);
 	free(table);
 }
 
 void	free_philos(t_philo *philos)
 {
+	int	i;
+
+	i = -1;
+	while (philos[++i].id != -1)
+		pthread_mutex_destroy(&philos[i].mutex);
 	free(philos);
 }
 
@@ -41,7 +47,7 @@ t_table	*init_table(int eat_limit, char **args)
 	table = malloc(sizeof(t_table));
 	table->nb_philo = ft_atoi(args[1]);
 	table->forks = init_forks(table->nb_philo);
-	table->is_death = 0;
+	table->is_dead = 0;
 	table->time_to_die = ft_atoi(args[2]);
 	table->time_to_eat = ft_atoi(args[3]);
 	table->time_to_sleep = ft_atoi(args[4]);
@@ -49,6 +55,7 @@ t_table	*init_table(int eat_limit, char **args)
 		table->nb_must_eat = ft_atoi(args[5]);
 	else
 		table->nb_must_eat = -42;
+	pthread_mutex_init(&table->mutex_forks, NULL);
 	return (table);
 }
 
@@ -57,7 +64,7 @@ t_philo	*init_philos(t_table *table)
 	t_philo	*philos;
 	int		i;
 
-	philos = malloc(sizeof(t_philo) * (table->nb_philo));
+	philos = malloc(sizeof(t_philo) * (table->nb_philo + 1));
 	i = -1;
 	while (++i < table->nb_philo)
 	{
@@ -72,8 +79,10 @@ t_philo	*init_philos(t_table *table)
 			philos[i].fork_l = table->nb_philo - 1;
 		else
 			philos[i].fork_l = i - 1;
+		pthread_mutex_init(&philos[i].mutex, NULL);
 		if (pthread_create(&philos[i].thread, NULL, routine, philos + i))
 			return (printf("failed to create thread !"), NULL);
 	}
+	philos[i].id = -1;
 	return (philos);
 }

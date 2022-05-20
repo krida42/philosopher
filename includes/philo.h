@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/20 17:10:36 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/20 22:32:00 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,34 @@
 # include <unistd.h>
 
 # define ULONG unsigned long
-# define BLUE "\033[1;34m"
-# define PURPLE "\033[1;35m"
-# define GRAY "\033[0;37m"
-# define WHITE "\033[0m"
-# define RED "\033[1;31m"
+# define BLUE "\001\033[1;34m\002"
+# define PURPLE "\001\033[1;35m\002"
+# define GRAY "\001\033[0;37m\002"
+# define WHITE "\001\033[0m\002"
+# define RED "\001\033[1;31m\002"
 
 typedef struct s_table {
-	int		nb_philo;
-	int		*forks;
-	int		is_death;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	long	nb_must_eat;
+	int				nb_philo;
+	int				*forks;
+	pthread_mutex_t	mutex_forks;
+	int				is_dead;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	long			nb_must_eat;
 }	t_table;
 
 typedef struct s_philo {
-	int			id;
-	pthread_t	thread;
-	int			state;
-	long		time_to_die;
-	long		time_to_eat;
-	long		time_to_sleep;
-	int			remains_eat;
-	int			fork_r;
-	int			fork_l;
+	int				id;
+	pthread_t		thread;
+	pthread_mutex_t	mutex;
+	int				state;
+	long			time_to_die;
+	long			time_to_eat;
+	long			time_to_sleep;
+	int				remains_eat;
+	int				fork_r;
+	int				fork_l;
 }	t_philo;
 
 t_table	*init_table(int eat_limit, char **args);

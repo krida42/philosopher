@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-SANI = -g -fsanitize=address
+SANI = -g -fsanitize=address #-fsanitize=thread
 NAME = philo
 INC_PATH = includes/
 SRC = main.c init.c utils.c time.c routines.c colors.c
@@ -10,12 +10,12 @@ all : $(NAME)
 
 
 %.o : %.c 
-	$(CC) $(CFLAGS) $(SANI) -o $@ -c $< -I $(INC_PATH)
+	$(CC) $(CFLAGS) -pthread -o $@ -c $< -I $(INC_PATH) $(SANI)
 
 $(OBJ) : $(INC_PATH)$(INCLUDES)
 
 $(NAME) : $(OBJ)
-	$(CC) $(SANI) $^ -o philo
+	$(CC) -pthread $^ -o philo $(SANI)
 
 
 COM_COLOR = \033[0;34m
@@ -45,6 +45,6 @@ re : fclean all
 
 test : $(NAME)
 	@echo -e "$(OK_COLOR)"
-	@echo "" && ./philo && echo ""
+	./philo 2 5 4 6
 
 .PHONY : all fclean clean re test
