@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/19 23:30:44 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/20 02:22:31 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,10 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # define ULONG unsigned long
+# define BLUE "\033[1;34m"
+# define PURPLE "\033[1;35m"
+# define GRAY "\033[0;37m"
+# define WHITE "\033[0m"
 
 typedef struct s_table {
 	int		nb_philo;
@@ -30,14 +34,15 @@ typedef struct s_table {
 }	t_table;
 
 typedef struct s_philo {
-	int		id;
-	int		state;
-	long	time_to_die;
-	long	time_to_eat;
-	long	time_to_sleep;
-	int		remains_eat;
-	int		fork_r;
-	int		fork_l;
+	int			id;
+	pthread_t	thread;
+	int			state;
+	long		time_to_die;
+	long		time_to_eat;
+	long		time_to_sleep;
+	int			remains_eat;
+	int			fork_r;
+	int			fork_l;
 }	t_philo;
 
 t_table	*init_table(int eat_limit, char **args);
@@ -49,4 +54,11 @@ void	free_philos(t_philo *philos);
 ULONG	get_time(void);
 
 int		ft_atoi(const char *s);
+
+void	*routine(void *philo);
+
+void	blue(void);
+void	purple(void);
+void	gray(void);
+void	white(void);
 #endif 

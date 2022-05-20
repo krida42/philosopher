@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/19 21:52:17 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/20 00:42:28 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ t_philo	*init_philos(t_table *table)
 			philos[i].fork_l = table->nb_philo - 1;
 		else
 			philos[i].fork_l = i - 1;
+		if (pthread_create(&philos[i].thread, NULL, routine, philos + i))
+			exit(puts("failed to create thread !"));
 	}
 	return (philos);
 }
