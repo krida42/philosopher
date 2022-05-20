@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:53:41 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/20 03:02:12 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/20 03:42:50 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,28 @@ int	main(int argc, char **argv)
 {
 	t_table	*table;
 	t_philo	*philos;
-	int		i;
 
 	if (argc != 5 && argc != 6)
 		return (puts("Pas le bon nombre d'argument !"));
 	table = init_table(argc == 6, argv);
 	philos = init_philos(table);
-	i = -1;
 	//describe_table(table, philos);
-	while (++i < table->nb_philo)
+	while (1)
 	{
-		if (pthread_join(philos[i].thread, NULL))
-			exit(puts("Cant't join thread"));
+		check_death(philos, table);
+		my_sleep(1);
 	}
 	free_philos(philos);
 	free_table(table);
 	return (0);
 }
+
+/*
+i = -1;
+while (++i < table->nb_philo)
+{
+
+	if (pthread_join(philos[i].thread, NULL))
+		exit(puts("Cant't join thread"));
+}
+*/
