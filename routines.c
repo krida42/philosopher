@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/20 03:47:59 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/20 16:57:38 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	*routine(void *philo_p)
 
 		printf(BLUE "Time: %lu |  %lu   philos:%d, has spoken\n" WHITE, time,time2 , philo->id + 1);
 		philo->time_to_die--;
-		my_sleep(1);
+		my_sleep(100);
 	}
 	return (philo_p);
 }
 
-void	check_death(t_philo *philos, t_table *table)
+int	is_dead(t_philo *philos, t_table *table)
 {
 	int	i;
 
@@ -41,9 +41,8 @@ void	check_death(t_philo *philos, t_table *table)
 		if (philos[i].time_to_die <= 0)
 		{
 			printf(RED "Philosophe: %d is dead" WHITE, philos[i].id + 1);
-			free_philos(philos);
-			free_table(table);
-			exit(0);
+			return (1);
 		}
 	}
+	return (0);
 }

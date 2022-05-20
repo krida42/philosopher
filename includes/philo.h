@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/20 03:42:41 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/20 17:10:36 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	my_sleep(ULONG ms);
 int		ft_atoi(const char *s);
 
 void	*routine(void *philo);
-void	check_death(t_philo *philos, t_table *table);
+int		is_dead(t_philo *philos, t_table *table);
 
 void	blue(void);
 void	purple(void);
