@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 19:24:54 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 21:29:39 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_table	*init_table(int eat_limit, char **args)
 	table->time_to_die = ft_atoi(args[2]);
 	table->time_to_eat = ft_atoi(args[3]);
 	table->time_to_sleep = ft_atoi(args[4]);
+	table->start_time = get_time();
 	if (eat_limit)
 		table->nb_must_eat = ft_atoi(args[5]);
 	else
@@ -72,7 +73,7 @@ t_philo	*init_philos(t_table *table)
 	{
 		philos[i].table = table;
 		philos[i].id = i;
-		philos[i].state = 0;
+		philos[i].state = -1;
 		philos[i].time_to_die = table->time_to_die;
 		philos[i].time_to_eat = table->time_to_eat;
 		philos[i].time_to_sleep = table->time_to_sleep;
