@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:53:41 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 17:58:28 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:39:22 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < table->nb_philo)
 	{
-
 		if (pthread_join(philos[i].thread, NULL))
 			return (printf(RED"Cant't join thread\n"WHITE));
 	}
@@ -54,18 +53,3 @@ int	main(int argc, char **argv)
 	free_table(table);
 	return (0);
 }
-
-
-
-/*
-   while (1)
-   {
-   if (is_dead(philos, table))
-   {
-   free_philos(philos);
-   return (free_table(table), 0);
-   }
-   usleep(500);
-   }
-
- */
