@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 22:03:17 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 23:46:38 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,15 @@ static void	move_fork(t_philo *philo, int take)
 	pthread_mutex_lock(&philo->table->mut_display);
 	if (take)
 	{
+		printf("forks : ");
+		for (int i = 0; i < table->nb_philo; i++)
+		{
+			printf("%d ", table->forks[i]);
+			fflush(stdout);
+		}
+		puts("");
 		if (!table->forks[philo->fork_l] || !table->forks[philo->fork_r])
-			exit (printf(RED "trying to get forks somehere theres isnt fork" WHITE));
+			exit (printf(RED "trying to get forks somehere theres isnt fork, id: %d\n" WHITE, philo->id));
 	}
 	else 
 	{
@@ -48,7 +55,10 @@ static void	set_state(t_philo *philo, int state)
 	if (state == 0)
 		printf("%lu %d is thinking\n", timestamp, philo->id + 1);
 	else if (state == 1)
-		printf("%lu %d is thinking\n", timestamp, philo->id + 1);
+		printf("%lu %d is eating\n", timestamp, philo->id + 1);
+	else if (state == 2)
+		printf("%lu %d is sleeping\n", timestamp, philo->id + 1);
+	philo->state = state;
 	pthread_mutex_unlock(&philo->table->mut_display);
 }
 
@@ -65,6 +75,23 @@ static void	do_action(t_philo *philo)
 			move_fork(philo, 1);
 		set_state(philo, is_odd);
 	}
+	else if (philo->state == 0)
+	{
+		puts("coucouc");
+	}
+	else if (philo->state == 1)
+	{
+		if (!eating(philo))
+		{
+			move_fork(philo, 0);
+			set_state(philo, 2);
+		}
+	}
+	else if (philo->state == 2)
+	{
+		if (!sleeping(philo))
+			set_state(philo, 0);
+	}
 
 	pthread_mutex_unlock(&philo->mutex);
 }
@@ -75,9 +102,9 @@ void	*routine(void *philo_p)
 
 	philo = philo_p;
 
-	pthread_mutex_lock(&philo->table->mut_display);
-	printf("coucou, je suis philo: %d\n", philo->id);
-	pthread_mutex_unlock(&philo->table->mut_display);
+	//pthread_mutex_lock(&philo->table->mut_display);
+	//printf("coucou, je suis philo: %d\n", philo->id);
+	//pthread_mutex_unlock(&philo->table->mut_display);
 	while (1)
 	{
 		//const ULONG	time = get_time() / 1000 ;

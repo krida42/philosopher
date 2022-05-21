@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 21:29:05 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 23:29:41 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int		ft_atoi(const char *s);
 void	*routine(void *philo);
 
 void	describe_end(t_philo *philos);
+int		eating(t_philo *philo);
+int		sleeping(t_philo *philo);
 
 void	blue(void);
 void	purple(void);

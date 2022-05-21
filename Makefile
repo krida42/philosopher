@@ -46,6 +46,6 @@ fclean : clean
 re : fclean all
 
 test : $(NAME)
-	valgrind --tool=helgrind ./philo 2 5 4 6
+	valgrind --tool=helgrind ./philo 4 5 4 6
 
 .PHONY : all fclean clean re test
