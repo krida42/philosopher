@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/20 22:33:10 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:25:54 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,27 @@ void	*routine(void *philo_p)
 		const ULONG	time2 = get_time() % 1000;
 
 		printf(BLUE "Time: %lu |  %lu   philos:%d, has spoken\n" WHITE, time,time2 , philo->id + 1);
+
+		pthread_mutex_lock(&philo->table->mutex);
+		if (philo->time_to_die <= 0)
+			philo->table->is_dead = 1;
+		if (philo->table->is_dead)
+		{
+			pthread_mutex_unlock(&philo->table->mutex);
+			return (NULL);
+		}
+
+		pthread_mutex_unlock(&philo->table->mutex);
+
 		pthread_mutex_lock(&philo->mutex);
 		philo->time_to_die--;
 		pthread_mutex_unlock(&philo->mutex);
 		my_sleep(1);
 	}
-	return (philo_p);
+	return (NULL);
 }
 
+/*
 int	is_dead(t_philo *philos, t_table *table)
 {
 	int	i;
@@ -53,3 +66,4 @@ int	is_dead(t_philo *philos, t_table *table)
 	}
 	return (0);
 }
+*/

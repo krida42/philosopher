@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/20 22:32:12 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 18:16:09 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	free_table(t_table *table)
 {
-	pthread_mutex_destroy(&table->mutex_forks);
+	pthread_mutex_destroy(&table->mutex);
 	free(table->forks);
 	free(table);
 }
@@ -55,7 +55,7 @@ t_table	*init_table(int eat_limit, char **args)
 		table->nb_must_eat = ft_atoi(args[5]);
 	else
 		table->nb_must_eat = -42;
-	pthread_mutex_init(&table->mutex_forks, NULL);
+	pthread_mutex_init(&table->mutex, NULL);
 	return (table);
 }
 
@@ -68,6 +68,7 @@ t_philo	*init_philos(t_table *table)
 	i = -1;
 	while (++i < table->nb_philo)
 	{
+		philos[i].table = table;
 		philos[i].id = i;
 		philos[i].state = 0;
 		philos[i].time_to_die = table->time_to_die;

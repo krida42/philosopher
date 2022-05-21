@@ -1,9 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-SANI = -g -fsanitize=address #-fsanitize=thread
+#SANI = -g
+SANI = -g -fsanitize=thread
+#SANI = -g -fsanitize=address
 NAME = philo
 INC_PATH = includes/
-SRC = main.c init.c utils.c time.c routines.c colors.c
+SRC = main.c init.c utils.c time.c routines.c colors.c philo_utils.c
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
@@ -12,7 +14,7 @@ all : $(NAME)
 %.o : %.c 
 	$(CC) $(CFLAGS) -pthread -o $@ -c $< -I $(INC_PATH) $(SANI)
 
-$(OBJ) : $(INC_PATH)$(INCLUDES)
+$(OBJ) : $(INC_PATH)$(INCLUDES) Makefile
 
 $(NAME) : $(OBJ)
 	$(CC) -pthread $^ -o philo $(SANI)
@@ -44,7 +46,6 @@ fclean : clean
 re : fclean all
 
 test : $(NAME)
-	@echo -e "$(OK_COLOR)"
 	./philo 2 5 4 6
 
 .PHONY : all fclean clean re test

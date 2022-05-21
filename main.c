@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:53:41 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/20 17:17:04 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 17:58:28 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,40 @@ int	main(int argc, char **argv)
 {
 	t_table	*table;
 	t_philo	*philos;
+	int		i;
 
+	puts("- - - - - - - - - - - - - - - - - - -\n");
 	if (argc != 5 && argc != 6)
-		return (puts("Pas le bon nombre d'argument !"));
+		return (printf(RED"Pas le bon nombre d'argument !\n"WHITE));
 	table = init_table(argc == 6, argv);
 	philos = init_philos(table);
 	if (!philos)
 		return (2);
 	//describe_table(table, philos);
-	while (1)
+	i = -1;
+	while (++i < table->nb_philo)
 	{
-		if (is_dead(philos, table))
-		{
-			free_philos(philos);
-			return (free_table(table), 0);
-		}
-		usleep(500);
+
+		if (pthread_join(philos[i].thread, NULL))
+			return (printf(RED"Cant't join thread\n"WHITE));
 	}
+	describe_end(philos);
 	free_philos(philos);
 	free_table(table);
 	return (0);
 }
 
-/*
-i = -1;
-while (++i < table->nb_philo)
-{
 
-	if (pthread_join(philos[i].thread, NULL))
-		return (puts("Cant't join thread"));
-}
-*/
+
+/*
+   while (1)
+   {
+   if (is_dead(philos, table))
+   {
+   free_philos(philos);
+   return (free_table(table), 0);
+   }
+   usleep(500);
+   }
+
+ */
