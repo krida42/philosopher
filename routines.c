@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/22 00:18:46 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/22 00:31:48 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ static void	do_action(t_philo *philo)
 {
 	int	is_odd;
 
-	//pthread_mutex_lock(&philo->mutex);
-	pthread_mutex_lock(&philo->table->mutex);
+	//pthread_mutex_lock(&philo->table->mutex);
 	is_odd = philo->id % 2;
 	//philo->time_to_die--;
 	if (philo->state == -1)
@@ -99,8 +98,7 @@ static void	do_action(t_philo *philo)
 			set_state(philo, 0);
 	}
 
-	//pthread_mutex_unlock(&philo->mutex);
-	pthread_mutex_unlock(&philo->table->mutex);
+	//pthread_mutex_unlock(&philo->table->mutex);
 }
 
 void	*routine(void *philo_p)
@@ -131,9 +129,9 @@ void	*routine(void *philo_p)
 			pthread_mutex_unlock(&philo->table->mutex);
 			return (NULL);
 		}
+		do_action(philo);
 		pthread_mutex_unlock(&philo->table->mutex);
 
-		do_action(philo);
 		philo->time_to_die--;
 		my_sleep(1);
 	}
