@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 23:46:38 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 23:54:13 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static void	do_action(t_philo *philo)
 	int	is_odd;
 
 	pthread_mutex_lock(&philo->mutex);
+	pthread_mutex_lock(&philo->table->mutex);
 	is_odd = philo->id % 2;
 	//philo->time_to_die--;
 	if (philo->state == -1)
@@ -77,7 +78,11 @@ static void	do_action(t_philo *philo)
 	}
 	else if (philo->state == 0)
 	{
-		puts("coucouc");
+		if (forks_available(philo))
+		{
+			move_fork(philo, 1);
+			set_state(philo, 1);
+		}
 	}
 	else if (philo->state == 1)
 	{
@@ -94,6 +99,7 @@ static void	do_action(t_philo *philo)
 	}
 
 	pthread_mutex_unlock(&philo->mutex);
+	pthread_mutex_unlock(&philo->table->mutex);
 }
 
 void	*routine(void *philo_p)

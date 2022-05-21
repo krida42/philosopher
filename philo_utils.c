@@ -6,11 +6,19 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:53:16 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 23:31:12 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 23:51:10 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int		forks_available(t_philo *philo)
+{
+	const t_table	*table = philo->table;
+	if (table->forks[philo->fork_l] && table->forks[philo->fork_r])
+		return (1);
+	return (0);
+}
 
 int		eating(t_philo *philo)
 {
