@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 18:16:09 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 19:24:54 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	free_table(t_table *table)
 {
 	pthread_mutex_destroy(&table->mutex);
+	pthread_mutex_destroy(&table->mut_display);
 	free(table->forks);
 	free(table);
 }
@@ -56,6 +57,7 @@ t_table	*init_table(int eat_limit, char **args)
 	else
 		table->nb_must_eat = -42;
 	pthread_mutex_init(&table->mutex, NULL);
+	pthread_mutex_init(&table->mut_display, NULL);
 	return (table);
 }
 

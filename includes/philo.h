@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 18:39:35 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/21 19:24:26 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_table {
 	long			time_to_eat;
 	long			time_to_sleep;
 	long			nb_must_eat;
+	pthread_mutex_t	mut_display;
 }	t_table;
 
 typedef struct s_philo {

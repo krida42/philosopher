@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
-#SANI = -g
-SANI = -g -fsanitize=thread
+SANI = -g
+#SANI = -g -fsanitize=thread
 #SANI = -g -fsanitize=address
 NAME = philo
 INC_PATH = includes/
@@ -46,6 +46,6 @@ fclean : clean
 re : fclean all
 
 test : $(NAME)
-	./philo 2 5 4 6
+	valgrind --tool=helgrind ./philo 2 5 4 6
 
 .PHONY : all fclean clean re test
