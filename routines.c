@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 23:54:13 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/22 00:18:46 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ static void	move_fork(t_philo *philo, int take)
 	pthread_mutex_lock(&philo->table->mut_display);
 	if (take)
 	{
-		printf("forks : ");
+	/*	printf("forks : ");
 		for (int i = 0; i < table->nb_philo; i++)
 		{
 			printf("%d ", table->forks[i]);
 			fflush(stdout);
 		}
 		puts("");
+	*/
 		if (!table->forks[philo->fork_l] || !table->forks[philo->fork_r])
 			exit (printf(RED "trying to get forks somehere theres isnt fork, id: %d\n" WHITE, philo->id));
 	}
@@ -66,7 +67,7 @@ static void	do_action(t_philo *philo)
 {
 	int	is_odd;
 
-	pthread_mutex_lock(&philo->mutex);
+	//pthread_mutex_lock(&philo->mutex);
 	pthread_mutex_lock(&philo->table->mutex);
 	is_odd = philo->id % 2;
 	//philo->time_to_die--;
@@ -98,7 +99,7 @@ static void	do_action(t_philo *philo)
 			set_state(philo, 0);
 	}
 
-	pthread_mutex_unlock(&philo->mutex);
+	//pthread_mutex_unlock(&philo->mutex);
 	pthread_mutex_unlock(&philo->table->mutex);
 }
 
@@ -133,6 +134,7 @@ void	*routine(void *philo_p)
 		pthread_mutex_unlock(&philo->table->mutex);
 
 		do_action(philo);
+		philo->time_to_die--;
 		my_sleep(1);
 	}
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:53:16 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 23:51:10 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/22 00:19:22 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int		eating(t_philo *philo)
 		return (0);
 	}
 	philo->time_to_eat--;
+	philo->time_to_die += 2;
 	return (1);
 }
 
