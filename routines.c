@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 00:03:59 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 00:54:02 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static void	set_state(t_philo *philo, int state)
 		printf("%lu %d is thinking\n", timestamp, philo->id + 1);
 	else if (state == 1)
 	{
-		//philo->time_to_die = philo->time_to_die + philo->table->time_to_eat * 2;
 		philo->time_to_eat = get_time() + philo->table->time_to_eat;
 		printf("%lu %d is eating\n", timestamp, philo->id + 1);
 	}
@@ -72,7 +71,7 @@ static void	do_action(t_philo *philo)
 			move_fork(philo, 1);
 		set_state(philo, is_odd);
 	}
-	else if (philo->state == 0)
+	else if (philo->state == 0 && philo->table->nb_philo > 1)
 	{
 		if (forks_available(philo))
 		{
@@ -86,6 +85,8 @@ static void	do_action(t_philo *philo)
 		{
 			philo->time_to_die += philo->table->time_to_die;
 			move_fork(philo, 0);
+			if (--philo->remains_eat == 0)
+				return ;
 			set_state(philo, 2);
 		}
 	}
@@ -106,7 +107,7 @@ void	*routine(void *philo_p)
 		pthread_mutex_lock(&philo->table->mutex);
 		if (get_time() >= philo->time_to_die)
 			philo->table->is_dead = 1;
-		if (philo->table->is_dead)
+		if (philo->table->is_dead || philo->remains_eat == 0)
 		{
 			pthread_mutex_unlock(&philo->table->mutex);
 			return (NULL);

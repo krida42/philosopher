@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:53:16 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/24 21:53:51 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 00:49:12 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,20 @@ int		sleeping(t_philo *philo)
 
 void	describe_end(t_philo *philos)
 {
-	int	i;
+	int				i;
+	int				counter;
+	const t_table	*table = philos[0].table;
 
+	counter = 0;
+	i = -1;
+	while (philos[++i].id != -1 && philos[i].remains_eat == 0)
+		counter++;
+	if (counter == table->nb_philo)
+	{
+		printf(GREEN "All Philosophers have eaten %ld times\n" WHITE,
+				table->nb_must_eat);
+		return ;
+	}
 	i = -1;
 	while (philos[++i].id != -1)
 	{

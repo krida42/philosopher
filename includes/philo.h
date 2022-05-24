@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/24 22:04:36 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 00:38:13 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define GRAY "\001\033[0;37m\002"
 # define WHITE "\001\033[0m\002"
 # define RED "\001\033[1;31m\002"
+# define GREEN "\001\033[1;32m\002"
 
 typedef struct s_table {
 	int				nb_philo;
