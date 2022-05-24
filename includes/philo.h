@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 00:38:13 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 00:59:32 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_philo {
 	ULONG			time_to_die;
 	ULONG			time_to_eat;
 	ULONG			time_to_sleep;
-	int				remains_eat;
+	ULONG			remains_eat;
 	int				fork_r;
 	int				fork_l;
 	struct s_table	*table;
