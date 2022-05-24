@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:53:16 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/22 00:19:22 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/24 21:53:51 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,16 @@ int		forks_available(t_philo *philo)
 
 int		eating(t_philo *philo)
 {
-	if (philo->time_to_eat <= 0)
-	{
-		philo->time_to_eat = philo->table->time_to_eat;
+	if (get_time() >= philo->time_to_eat)
 		return (0);
-	}
-	philo->time_to_eat--;
-	philo->time_to_die += 2;
 	return (1);
 }
 
 
 int		sleeping(t_philo *philo)
 {
-	if (philo->time_to_sleep <= 0)
-	{
-		philo->time_to_sleep = philo->table->time_to_sleep;
+	if (get_time() >= philo->time_to_sleep)
 		return (0);
-	}
-	philo->time_to_sleep--;
 	return (1);
 }
 
@@ -51,7 +42,7 @@ void	describe_end(t_philo *philos)
 	i = -1;
 	while (philos[++i].id != -1)
 	{
-		if (philos[i].time_to_die <= 0)
+		if (get_time () >= philos[i].time_to_die)
 			printf(RED "Philosopher id: %d is dead\n" WHITE, philos[i].id + 1);
 	}
 }

@@ -11,7 +11,7 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 
-%.o : %.c 
+%.o : %.c
 	$(CC) $(CFLAGS) -pthread -o $@ -c $< -I $(INC_PATH) $(SANI)
 
 $(OBJ) : $(INC_PATH)$(INCLUDES) Makefile
@@ -37,7 +37,7 @@ WHITE_COLOR = \033[1;37m
 
 
 
-clean : 
+clean :
 	rm -f $(OBJ)
 
 fclean : clean
@@ -46,6 +46,6 @@ fclean : clean
 re : fclean all
 
 test : $(NAME)
-	valgrind --tool=helgrind ./philo 4 5 4 6
+	./philo 4 410 200 200
 
 .PHONY : all fclean clean re test

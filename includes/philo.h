@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 23:51:23 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/24 22:04:36 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ typedef struct s_philo {
 	pthread_t		thread;
 	pthread_mutex_t	mutex;
 	int				state;
-	long			time_to_die;
-	long			time_to_eat;
-	long			time_to_sleep;
+	ULONG			time_to_die;
+	ULONG			time_to_eat;
+	ULONG			time_to_sleep;
 	int				remains_eat;
 	int				fork_r;
 	int				fork_l;
