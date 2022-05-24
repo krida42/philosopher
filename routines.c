@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/22 00:31:48 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 00:14:37 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@ static void	move_fork(t_philo *philo, int take)
 	pthread_mutex_lock(&philo->table->mut_display);
 	if (take)
 	{
-	/*	printf("forks : ");
-		for (int i = 0; i < table->nb_philo; i++)
-		{
-			printf("%d ", table->forks[i]);
-			fflush(stdout);
-		}
-		puts("");
-	*/
 		if (!table->forks[philo->fork_l] || !table->forks[philo->fork_r])
 			exit (printf(RED "trying to get forks somehere theres isnt fork, id: %d\n" WHITE, philo->id));
 	}
@@ -67,9 +59,7 @@ static void	do_action(t_philo *philo)
 {
 	int	is_odd;
 
-	//pthread_mutex_lock(&philo->table->mutex);
 	is_odd = philo->id % 2;
-	//philo->time_to_die--;
 	if (philo->state == -1)
 	{
 		if (is_odd)
@@ -88,6 +78,7 @@ static void	do_action(t_philo *philo)
 	{
 		if (!eating(philo))
 		{
+			philo->time_to_die += philo->table->time_to_die;
 			move_fork(philo, 0);
 			set_state(philo, 2);
 		}
@@ -97,8 +88,6 @@ static void	do_action(t_philo *philo)
 		if (!sleeping(philo))
 			set_state(philo, 0);
 	}
-
-	//pthread_mutex_unlock(&philo->table->mutex);
 }
 
 void	*routine(void *philo_p)
@@ -107,20 +96,9 @@ void	*routine(void *philo_p)
 
 	philo = philo_p;
 
-	//pthread_mutex_lock(&philo->table->mut_display);
-	//printf("coucou, je suis philo: %d\n", philo->id);
-	//pthread_mutex_unlock(&philo->table->mut_display);
+
 	while (1)
 	{
-		//const ULONG	time = get_time() / 1000 ;
-		//const ULONG	time2 = get_time() % 1000;
-
-		/*
-		pthread_mutex_lock(&philo->table->mut_display);
-		printf(BLUE "Time: %lu |  %lu   philos:%d, has spoken\n" WHITE, time,time2 , philo->id + 1);
-		pthread_mutex_unlock(&philo->table->mut_display);
-*/
-
 		pthread_mutex_lock(&philo->table->mutex);
 		if (philo->time_to_die <= 0)
 			philo->table->is_dead = 1;
