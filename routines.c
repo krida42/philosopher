@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/24 23:30:38 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 00:00:18 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	do_action(t_philo *philo)
 		{
 			//printf("time to die : %lu\n", philo->time_to_die - get_time());
 			//printf("gettime %lu\n", get_time());
-			philo->time_to_die += philo->table->time_to_eat + philo->table->time_to_sleep;
+			philo->time_to_die += philo->table->time_to_die;
 			move_fork(philo, 0);
 			set_state(philo, 2);
 		}
