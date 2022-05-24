@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:53:41 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/21 18:39:22 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 01:02:23 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	main(int argc, char **argv)
 	philos = init_philos(table);
 	if (!philos)
 		return (2);
-	//describe_table(table, philos);
 	i = -1;
 	while (++i < table->nb_philo)
 	{

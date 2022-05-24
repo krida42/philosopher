@@ -6,29 +6,29 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:53:16 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 00:49:12 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 01:03:26 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int		forks_available(t_philo *philo)
+int	forks_available(t_philo *philo)
 {
 	const t_table	*table = philo->table;
+
 	if (table->forks[philo->fork_l] && table->forks[philo->fork_r])
 		return (1);
 	return (0);
 }
 
-int		eating(t_philo *philo)
+int	eating(t_philo *philo)
 {
 	if (get_time() >= philo->time_to_eat)
 		return (0);
 	return (1);
 }
 
-
-int		sleeping(t_philo *philo)
+int	sleeping(t_philo *philo)
 {
 	if (get_time() >= philo->time_to_sleep)
 		return (0);
@@ -48,7 +48,7 @@ void	describe_end(t_philo *philos)
 	if (counter == table->nb_philo)
 	{
 		printf(GREEN "All Philosophers have eaten %ld times\n" WHITE,
-				table->nb_must_eat);
+			table->nb_must_eat);
 		return ;
 	}
 	i = -1;

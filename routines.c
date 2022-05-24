@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 00:54:02 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 01:16:42 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	move_fork(t_philo *philo, int take)
 		if (!table->forks[philo->fork_l] || !table->forks[philo->fork_r])
 			exit (printf(RED "trying to get forks somehere theres isnt fork, id: %d\n" WHITE, philo->id));
 	}
-	else 
+	else
 	{
 		if (table->forks[philo->fork_l] || table->forks[philo->fork_r])
 			exit (printf(RED "trying to putback forks somehere theres is already fork" WHITE));
@@ -34,7 +34,6 @@ static void	move_fork(t_philo *philo, int take)
 	{
 		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
 		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
-
 	}
 	pthread_mutex_unlock(&philo->table->mut_display);
 }
@@ -60,17 +59,19 @@ static void	set_state(t_philo *philo, int state)
 	pthread_mutex_unlock(&philo->table->mut_display);
 }
 
+static void	first_action(t_philo *philo)
+{
+	const int	is_odd = philo->id % 2;
+
+	if (is_odd)
+		move_fork(philo, 1);
+	set_state(philo, is_odd);
+}
+
 static void	do_action(t_philo *philo)
 {
-	int	is_odd;
-
-	is_odd = philo->id % 2;
 	if (philo->state == -1)
-	{
-		if (is_odd)
-			move_fork(philo, 1);
-		set_state(philo, is_odd);
-	}
+		first_action(philo);
 	else if (philo->state == 0 && philo->table->nb_philo > 1)
 	{
 		if (forks_available(philo))
@@ -91,10 +92,8 @@ static void	do_action(t_philo *philo)
 		}
 	}
 	else if (philo->state == 2)
-	{
 		if (!sleeping(philo))
 			set_state(philo, 0);
-	}
 }
 
 void	*routine(void *philo_p)
@@ -118,4 +117,3 @@ void	*routine(void *philo_p)
 	}
 	return (NULL);
 }
-
