@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 00:59:32 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 01:27:46 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # define WHITE "\001\033[0m\002"
 # define RED "\001\033[1;31m\002"
 # define GREEN "\001\033[1;32m\002"
+
+# define THINK 0
+# define EAT 1
+# define SLEEP 2
 
 typedef struct s_table {
 	int				nb_philo;

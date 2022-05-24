@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 01:16:42 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 01:31:17 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ static void	set_state(t_philo *philo, int state)
 	pthread_mutex_lock(&philo->table->mut_display);
 	if (state == 0)
 		printf("%lu %d is thinking\n", timestamp, philo->id + 1);
-	else if (state == 1)
+	else if (state == EAT)
 	{
 		philo->time_to_eat = get_time() + philo->table->time_to_eat;
 		printf("%lu %d is eating\n", timestamp, philo->id + 1);
 	}
-	else if (state == 2)
+	else if (state == SLEEP)
 	{
 		philo->time_to_sleep = get_time() + philo->table->time_to_sleep;
 		printf("%lu %d is sleeping\n", timestamp, philo->id + 1);
@@ -72,15 +72,15 @@ static void	do_action(t_philo *philo)
 {
 	if (philo->state == -1)
 		first_action(philo);
-	else if (philo->state == 0 && philo->table->nb_philo > 1)
+	else if (philo->state == THINK && philo->table->nb_philo > 1)
 	{
 		if (forks_available(philo))
 		{
 			move_fork(philo, 1);
-			set_state(philo, 1);
+			set_state(philo, EAT);
 		}
 	}
-	else if (philo->state == 1)
+	else if (philo->state == EAT)
 	{
 		if (!eating(philo))
 		{
@@ -88,12 +88,12 @@ static void	do_action(t_philo *philo)
 			move_fork(philo, 0);
 			if (--philo->remains_eat == 0)
 				return ;
-			set_state(philo, 2);
+			set_state(philo, SLEEP);
 		}
 	}
-	else if (philo->state == 2)
+	else if (philo->state == SLEEP)
 		if (!sleeping(philo))
-			set_state(philo, 0);
+			set_state(philo, THINK);
 }
 
 void	*routine(void *philo_p)
