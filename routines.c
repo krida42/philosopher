@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 01:37:52 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 01:58:55 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,6 @@ static void	move_fork(t_philo *philo, int take)
 	const ULONG		timestamp = get_time() - philo->table->start_time;
 
 	pthread_mutex_lock(&philo->table->mut_display);
-	if (take)
-	{
-		if (!table->forks[philo->fork_l] || !table->forks[philo->fork_r])
-			exit (printf(RED "trying to get forks somehere theres isnt fork, id: %d\n" WHITE, philo->id));
-	}
-	else
-	{
-		if (table->forks[philo->fork_l] || table->forks[philo->fork_r])
-			exit (printf(RED "trying to putback forks somehere theres is already fork" WHITE));
-	}
 	table->forks[philo->fork_l] = !take;
 	table->forks[philo->fork_r] = !take;
 	if (take)

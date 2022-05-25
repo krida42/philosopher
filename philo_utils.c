@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:53:16 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 01:03:26 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/05/25 02:05:17 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	describe_end(t_philo *philos)
 	while (philos[++i].id != -1)
 	{
 		if (get_time () >= philos[i].time_to_die)
-			printf(RED "Philosopher id: %d is dead\n" WHITE, philos[i].id + 1);
+			printf(RED "%lu %d is dead\n" WHITE,
+				get_time() - philos[i].table->start_time, philos[i].id + 1);
 	}
 }
