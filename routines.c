@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 00:14:37 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/06/18 17:01:01 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ static void	set_state(t_philo *philo, int state)
 	if (state == 0)
 		printf("%lu %d is thinking\n", timestamp, philo->id + 1);
 	else if (state == 1)
+	{
+		philo->time_to_die += philo->table->time_to_die;
 		printf("%lu %d is eating\n", timestamp, philo->id + 1);
+	}
 	else if (state == 2)
 		printf("%lu %d is sleeping\n", timestamp, philo->id + 1);
 	philo->state = state;
@@ -78,7 +81,6 @@ static void	do_action(t_philo *philo)
 	{
 		if (!eating(philo))
 		{
-			philo->time_to_die += philo->table->time_to_die;
 			move_fork(philo, 0);
 			set_state(philo, 2);
 		}
