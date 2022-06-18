@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 01:58:55 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/06/18 17:54:12 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	set_state(t_philo *philo, int state)
 	else if (state == EAT)
 	{
 		philo->time_to_eat = get_time() + philo->table->time_to_eat;
-		philo->time_to_die += philo->table->time_to_die;
+		philo->time_to_die = get_time() + philo->table->time_to_die;
 		printf("%lu %d is eating\n", timestamp, philo->id + 1);
 	}
 	else if (state == SLEEP)
