@@ -6,10 +6,11 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/06/18 17:54:12 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:13:33 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "includes/philo.h"
 #include "philo.h"
 
 static void	move_fork(t_philo *philo, int take)
@@ -18,12 +19,47 @@ static void	move_fork(t_philo *philo, int take)
 	const ULONG		timestamp = get_time() - philo->table->start_time;
 
 	pthread_mutex_lock(&philo->table->mut_display);
-	table->forks[philo->fork_l] = !take;
-	table->forks[philo->fork_r] = !take;
-	if (take)
+	if (!take)
 	{
-		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
-		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+		if ((table->forks[philo->fork_l] ||  table->forks[philo->fork_r]))
+			exit(printf(RED"Trying to drop forks when there is already foroks on table"WHITE));
+		if (!philo->has_fr || !philo->has_fl)
+			exit(printf(RED"Trying to drop forks when philo doesnt have forks on both hands"WHITE));
+		philo->has_fl = 0;
+		philo->has_fr = 0;
+		table->forks[philo->fork_l] = 1;
+		table->forks[philo->fork_r] = 1;
+	}
+	else 
+	{
+		if (!table->forks[philo->fork_l] && !table->forks[philo->fork_r])
+			exit(printf(RED"Trying to get forks when there is no forks on table"WHITE));
+		if (philo->has_fr &&  philo->has_fl)
+			exit(printf(RED"Trying to get forks when philo have forks on both hands"WHITE));
+		if (table->forks[philo->fork_l] && table->forks[philo->fork_r])
+		{
+
+			philo->has_fl = 1;
+			table->forks[philo->fork_l] = 0;
+
+			philo->has_fr = 1;
+			table->forks[philo->fork_r] = 0;
+
+			printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+			printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+		}
+		else if (table->forks[philo->fork_l])
+		{
+			philo->has_fl = 1;
+			table->forks[philo->fork_l] = 0;
+			printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+		}
+		else
+		{
+			philo->has_fr = 1;
+			table->forks[philo->fork_r] = 0;
+			printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+		}
 	}
 	pthread_mutex_unlock(&philo->table->mut_display);
 }
@@ -66,10 +102,9 @@ static void	do_action(t_philo *philo)
 	else if (philo->state == THINK && philo->table->nb_philo > 1)
 	{
 		if (forks_available(philo))
-		{
 			move_fork(philo, 1);
+		if (philo->has_fr && philo->has_fl)
 			set_state(philo, EAT);
-		}
 	}
 	else if (philo->state == EAT)
 	{

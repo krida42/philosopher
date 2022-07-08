@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 00:21:44 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/07/08 18:49:27 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ t_philo	*init_philos(t_table *table)
 		philos[i].state = -1;
 		philos[i].time_to_die = get_time() + table->time_to_die;
 		philos[i].remains_eat = table->nb_must_eat;
+		philos[i].has_fr= 0;
+		philos[i].has_fl = 0;
 		philos[i].fork_r = i;
 		if (i == 0)
 			philos[i].fork_l = table->nb_philo - 1;

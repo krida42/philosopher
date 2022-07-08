@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:53:16 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 02:05:17 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:13:47 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	forks_available(t_philo *philo)
 {
 	const t_table	*table = philo->table;
 
-	if (table->forks[philo->fork_l] && table->forks[philo->fork_r])
+	if (table->forks[philo->fork_l] || table->forks[philo->fork_r])
 		return (1);
 	return (0);
 }
@@ -59,3 +59,5 @@ void	describe_end(t_philo *philos)
 				get_time() - philos[i].table->start_time, philos[i].id + 1);
 	}
 }
+
+

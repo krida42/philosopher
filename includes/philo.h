@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 01:27:46 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/07/08 18:49:19 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ typedef struct s_philo {
 	ULONG			remains_eat;
 	int				fork_r;
 	int				fork_l;
+	int				has_fr;
+	int				has_fl;
 	struct s_table	*table;
 }	t_philo;
 
