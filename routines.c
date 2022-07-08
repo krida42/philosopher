@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/07/08 19:13:33 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/07/08 19:26:36 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,10 @@ static void	first_action(t_philo *philo)
 
 	if (is_odd)
 		move_fork(philo, 1);
-	set_state(philo, is_odd);
+	if (philo->has_fr && philo->has_fl)
+		set_state(philo, EAT);
+	else
+		set_state(philo, THINK);
 }
 
 static void	do_action(t_philo *philo)
