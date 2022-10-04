@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "philo.h"
-
+/*
 int	forks_available(t_philo *philo)
 {
 	const t_table	*table = philo->table;
@@ -20,7 +20,7 @@ int	forks_available(t_philo *philo)
 		return (1);
 	return (0);
 }
-
+*/
 int	eating(t_philo *philo)
 {
 	if (get_time() >= philo->time_to_eat)

@@ -33,8 +33,7 @@
 
 typedef struct s_table {
 	int				nb_philo;
-	int				*forks;
-	pthread_mutex_t	mutex;
+	pthread_mutex_t	*forks;
 	int				is_dead;
 	long			time_to_die;
 	long			time_to_eat;
@@ -47,7 +46,6 @@ typedef struct s_table {
 typedef struct s_philo {
 	int				id;
 	pthread_t		thread;
-	pthread_mutex_t	mutex;
 	int				state;
 	ULONG			time_to_die;
 	ULONG			time_to_eat;

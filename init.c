@@ -25,19 +25,19 @@ void	free_philos(t_philo *philos)
 	int	i;
 
 	i = -1;
-	while (philos[++i].id != -1)
-		pthread_mutex_destroy(&philos[i].mutex);
+	//while (philos[++i].id != -1)
+	//	pthread_mutex_destroy(&philos[i].mutex);
 	free(philos);
 }
 
-static int	*init_forks(int n)
+static int	*init_forks(t_table *table)
 {
-	int	*forks;
+	int	i;
 
-	forks = malloc(sizeof(int) * n);
-	while (n--)
-		forks[n] = 1;
-	return (forks);
+	i = -1;
+	while (++i < table->nb_philo)
+		pthread_mutex_init(&table->forks[i], NULL);
+	return (0);
 }
 
 // NEED TO FREEE AFTER ALL
@@ -47,7 +47,7 @@ t_table	*init_table(int eat_limit, char **args)
 
 	table = malloc(sizeof(t_table));
 	table->nb_philo = ft_atoi(args[1]);
-	table->forks = init_forks(table->nb_philo);
+	init_forks(table->nb_philo);
 	table->is_dead = 0;
 	table->time_to_die = ft_atoi(args[2]);
 	table->time_to_eat = ft_atoi(args[3]);
@@ -57,7 +57,7 @@ t_table	*init_table(int eat_limit, char **args)
 		table->nb_must_eat = ft_atoi(args[5]);
 	else
 		table->nb_must_eat = -42;
-	pthread_mutex_init(&table->mutex, NULL);
+	
 	pthread_mutex_init(&table->mut_display, NULL);
 	return (table);
 }
@@ -81,7 +81,6 @@ t_philo	*init_philos(t_table *table)
 			philos[i].fork_l = table->nb_philo - 1;
 		else
 			philos[i].fork_l = i - 1;
-		pthread_mutex_init(&philos[i].mutex, NULL);
 		if (pthread_create(&philos[i].thread, NULL, routine, philos + i))
 			return (printf("failed to create thread !"), NULL);
 	}
