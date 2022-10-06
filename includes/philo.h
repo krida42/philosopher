@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 01:27:46 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/06 16:27:52 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 typedef struct s_table {
 	int				nb_philo;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	is_dead_mut;
 	int				is_dead;
 	long			time_to_die;
 	long			time_to_eat;

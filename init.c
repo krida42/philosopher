@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 00:21:44 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/06 16:24:49 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	free_table(t_table *table)
 {
-	pthread_mutex_destroy(&table->mutex);
 	pthread_mutex_destroy(&table->mut_display);
 	free(table->forks);
 	free(table);
@@ -34,6 +33,7 @@ static int	*init_forks(t_table *table)
 {
 	int	i;
 
+	table->forks = malloc(sizeof(*table->forks) * table->nb_philo);
 	i = -1;
 	while (++i < table->nb_philo)
 		pthread_mutex_init(&table->forks[i], NULL);
@@ -47,7 +47,7 @@ t_table	*init_table(int eat_limit, char **args)
 
 	table = malloc(sizeof(t_table));
 	table->nb_philo = ft_atoi(args[1]);
-	init_forks(table->nb_philo);
+	init_forks(table);
 	table->is_dead = 0;
 	table->time_to_die = ft_atoi(args[2]);
 	table->time_to_eat = ft_atoi(args[3]);

@@ -6,25 +6,29 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/06/18 17:54:12 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/06 17:08:06 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <pthread.h>
 
 static void	move_fork(t_philo *philo, int take)
 {
 	const t_table	*table = philo->table;
 	const ULONG		timestamp = get_time() - philo->table->start_time;
 
-	pthread_mutex_lock(&philo->table->mut_display);
-	table->forks[philo->fork_l] = !take;
-	table->forks[philo->fork_r] = !take;
-	if (take)
+	if (!take)
 	{
-		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
-		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+		pthread_mutex_unlock(table->forks + philo->fork_l);
+		pthread_mutex_unlock(table->forks + philo->fork_r);
+		return ;
 	}
+	pthread_mutex_lock(table->forks + philo->fork_l);
+	pthread_mutex_lock(table->forks + philo->fork_r);
+	pthread_mutex_lock(&philo->table->mut_display);
+	printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+	printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
 	pthread_mutex_unlock(&philo->table->mut_display);
 }
 
@@ -57,6 +61,8 @@ static void	first_action(t_philo *philo)
 	if (is_odd)
 		move_fork(philo, 1);
 	set_state(philo, is_odd);
+	if (!is_odd)
+		usleep(5000);
 }
 
 static void	do_action(t_philo *philo)
@@ -65,7 +71,7 @@ static void	do_action(t_philo *philo)
 		first_action(philo);
 	else if (philo->state == THINK && philo->table->nb_philo > 1)
 	{
-		if (forks_available(philo))
+		if (forks_available(philo))// VOIR ICI 
 		{
 			move_fork(philo, 1);
 			set_state(philo, EAT);
@@ -93,17 +99,16 @@ void	*routine(void *philo_p)
 	philo = philo_p;
 	while (1)
 	{
-		pthread_mutex_lock(&philo->table->mutex);
+		pthread_mutex_lock(&philo->table->is_dead_mut);
 		if (get_time() >= philo->time_to_die)
 			philo->table->is_dead = 1;
+		pthread_mutex_unlock(&philo->table->is_dead_mut);
 		if (philo->table->is_dead || philo->remains_eat == 0)
 		{
-			pthread_mutex_unlock(&philo->table->mutex);
 			return (NULL);
 		}
 		do_action(philo);
-		pthread_mutex_unlock(&philo->table->mutex);
-		usleep(250);
+		usleep(750);
 	}
 	return (NULL);
 }
