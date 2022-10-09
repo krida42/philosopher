@@ -1,29 +1,32 @@
 #include "philo.h"
+#include <pthread.h>
 
 void	*monitor_routine(void *table_p)
 {
 	int		i;
 	t_table	*table;
-	
+
 	table = table_p;
-	
+
 	printf("MONOTOR\n");
-	while (table->nb_loaded < table->nb_philo)
+	while (get_time() < table->start_time)
 		;
-	table->start_time = get_time();
-	usleep(500);
 	while (1)
 	{
-		pthread_mutex_lock(&table->mut_is_dead);
 		i = -1;
 		while (table->philos[++i].id != -1)
+		{
+			pthread_mutex_lock(&table->philos[i].mut_time_to_die);
 			if (get_time() >= table->philos[i].time_to_die)
 			{
+				pthread_mutex_unlock(&table->philos[i].mut_time_to_die);
+				pthread_mutex_lock(&table->mut_is_dead);
 				table->is_dead = 1;
 				pthread_mutex_unlock(&table->mut_is_dead);
 				return (NULL);
 			}
-		pthread_mutex_unlock(&table->mut_is_dead);
+			pthread_mutex_unlock(&table->philos[i].mut_time_to_die);
+		}
 		usleep(1000);
 	}
 }

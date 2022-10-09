@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/09 03:18:21 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/09 13:18:08 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_philo {
 	int				fork_r;
 	int				fork_l;
 	struct s_table	*table;
+	pthread_mutex_t	mut_time_to_die;
 }	t_philo;
 
 t_table	*init_table(int eat_limit, char **args);
