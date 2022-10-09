@@ -1,11 +1,11 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 SANI = -g
-#SANI = -g -fsanitize=thread
+SANI = -g -fsanitize=thread
 #SANI = -g -fsanitize=address
 NAME = philo
 INC_PATH = includes/
-SRC = main.c init.c utils.c time.c routines.c colors.c philo_utils.c
+SRC = main.c init.c utils.c time.c routines.c colors.c philo_utils.c monitor.c
 OBJ = $(SRC:.c=.o)
 
 all : $(NAME)
@@ -47,5 +47,7 @@ re : fclean all
 
 test : $(NAME)
 	./philo 4 410 200 200
+valgrind : $(NAME)
+	valgrind --tool=helgrind ./philo 4 410 200 200
 
 .PHONY : all fclean clean re test

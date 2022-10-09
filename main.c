@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:53:41 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/05/25 01:02:23 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/09 03:04:13 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int	main(int argc, char **argv)
 		return (printf(RED"Pas le bon nombre d'argument !\n"WHITE));
 	table = init_table(argc == 6, argv);
 	philos = init_philos(table);
-	if (!philos)
+	if (philos)
+		table->philos = philos;
+	if (!philos || start_monitor(table))
 		return (2);
 	i = -1;
 	while (++i < table->nb_philo)

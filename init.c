@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/06 16:24:49 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/09 03:04:30 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,17 @@
 void	free_table(t_table *table)
 {
 	pthread_mutex_destroy(&table->mut_display);
+	pthread_mutex_destroy(&table->mut_is_dead);
+	pthread_mutex_destroy(&table->mut_start);
 	free(table->forks);
 	free(table);
 }
 
 void	free_philos(t_philo *philos)
 {
-	int	i;
+	//int	i;
 
-	i = -1;
+	//i = -1;
 	//while (philos[++i].id != -1)
 	//	pthread_mutex_destroy(&philos[i].mutex);
 	free(philos);
@@ -36,7 +38,7 @@ static int	*init_forks(t_table *table)
 	table->forks = malloc(sizeof(*table->forks) * table->nb_philo);
 	i = -1;
 	while (++i < table->nb_philo)
-		pthread_mutex_init(&table->forks[i], NULL);
+		pthread_mutex_init(table->forks + i, NULL);
 	return (0);
 }
 
@@ -52,13 +54,17 @@ t_table	*init_table(int eat_limit, char **args)
 	table->time_to_die = ft_atoi(args[2]);
 	table->time_to_eat = ft_atoi(args[3]);
 	table->time_to_sleep = ft_atoi(args[4]);
-	table->start_time = get_time();
+	//table->start_time = get_time();
+	table->start_time = 0;
 	if (eat_limit)
 		table->nb_must_eat = ft_atoi(args[5]);
 	else
 		table->nb_must_eat = -42;
 	
 	pthread_mutex_init(&table->mut_display, NULL);
+	pthread_mutex_init(&table->mut_is_dead, NULL);
+	pthread_mutex_init(&table->mut_start, NULL);
+	table->nb_loaded = 0;
 	return (table);
 }
 
@@ -74,7 +80,7 @@ t_philo	*init_philos(t_table *table)
 		philos[i].table = table;
 		philos[i].id = i;
 		philos[i].state = -1;
-		philos[i].time_to_die = get_time() + table->time_to_die;
+		//philos[i].time_to_die = get_time() + table->time_to_die;
 		philos[i].remains_eat = table->nb_must_eat;
 		philos[i].fork_r = i;
 		if (i == 0)
@@ -82,7 +88,7 @@ t_philo	*init_philos(t_table *table)
 		else
 			philos[i].fork_l = i - 1;
 		if (pthread_create(&philos[i].thread, NULL, routine, philos + i))
-			return (printf("failed to create thread !"), NULL);
+			return (printf("failed to create thread !\n"), NULL);
 	}
 	philos[i].id = -1;
 	return (philos);

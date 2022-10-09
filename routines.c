@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/06 17:08:06 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/09 03:44:24 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	move_fork(t_philo *philo, int take)
 		pthread_mutex_unlock(table->forks + philo->fork_r);
 		return ;
 	}
-	pthread_mutex_lock(table->forks + philo->fork_l);
 	pthread_mutex_lock(table->forks + philo->fork_r);
+	pthread_mutex_lock(table->forks + philo->fork_l);
 	pthread_mutex_lock(&philo->table->mut_display);
 	printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
 	printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
@@ -71,11 +71,11 @@ static void	do_action(t_philo *philo)
 		first_action(philo);
 	else if (philo->state == THINK && philo->table->nb_philo > 1)
 	{
-		if (forks_available(philo))// VOIR ICI 
-		{
-			move_fork(philo, 1);
-			set_state(philo, EAT);
-		}
+		//if (forks_available(philo))// VOIR ICI 
+	//	{
+		move_fork(philo, 1);
+		set_state(philo, EAT);
+	//	}
 	}
 	else if (philo->state == EAT)
 	{
@@ -97,12 +97,21 @@ void	*routine(void *philo_p)
 	t_philo	*philo;
 
 	philo = philo_p;
+	//printf("cuicui\n");
+	pthread_mutex_lock(&philo->table->mut_start);
+	philo->table->nb_loaded++;
+	pthread_mutex_unlock(&philo->table->mut_start);
+	//printf("coco\n");
+	while (philo->table->start_time == 0)
+		;
+	philo->time_to_die = get_time() + philo->table->time_to_die;
+	//printf("salut\n");
 	while (1)
 	{
-		pthread_mutex_lock(&philo->table->is_dead_mut);
-		if (get_time() >= philo->time_to_die)
-			philo->table->is_dead = 1;
-		pthread_mutex_unlock(&philo->table->is_dead_mut);
+	//	pthread_mutex_lock(&philo->table->mut_is_dead);
+	//	if (get_time() >= philo->time_to_die)
+	//		philo->table->is_dead = 1;
+	//	pthread_mutex_unlock(&philo->table->mut_is_dead);
 		if (philo->table->is_dead || philo->remains_eat == 0)
 		{
 			return (NULL);

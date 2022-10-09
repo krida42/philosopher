@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/06 16:27:52 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/09 03:18:21 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 typedef struct s_table {
 	int				nb_philo;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	is_dead_mut;
+	pthread_mutex_t	mut_is_dead;
 	int				is_dead;
 	long			time_to_die;
 	long			time_to_eat;
@@ -42,6 +42,9 @@ typedef struct s_table {
 	long			nb_must_eat;
 	ULONG			start_time;
 	pthread_mutex_t	mut_display;
+	pthread_mutex_t	mut_start;
+	int				nb_loaded;
+	struct s_philo	*philos;
 }	t_table;
 
 typedef struct s_philo {
@@ -74,6 +77,8 @@ void	describe_end(t_philo *philos);
 int		eating(t_philo *philo);
 int		sleeping(t_philo *philo);
 int		forks_available(t_philo *philo);
+
+int		start_monitor(t_table *table);
 
 void	blue(void);
 void	purple(void);
