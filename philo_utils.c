@@ -35,6 +35,13 @@ int	sleeping(t_philo *philo)
 	return (1);
 }
 
+int	thinking(t_philo *philo)
+{
+	if (get_time() >= philo->time_to_think)
+		return (0);
+	return (1);
+}
+
 void	describe_end(t_philo *philos)
 {
 	int				i;

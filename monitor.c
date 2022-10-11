@@ -39,5 +39,7 @@ int	start_monitor(t_table *table)
 
 	if (pthread_create(&monitor, NULL, monitor_routine, table))
 		return (printf("failed to create monitor thread !\n"), 1);
+	if (pthread_join(monitor, NULL))
+		return (printf("failed to join monitor thread !\n"), 1);
 	return (0);
 }

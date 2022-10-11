@@ -39,6 +39,7 @@ typedef struct s_table {
 	long			time_to_die;
 	long			time_to_eat;
 	long			time_to_sleep;
+	long			time_to_think;
 	long			nb_must_eat;
 	ULONG			start_time;
 	pthread_mutex_t	mut_display;
@@ -54,6 +55,7 @@ typedef struct s_philo {
 	ULONG			time_to_die;
 	ULONG			time_to_eat;
 	ULONG			time_to_sleep;
+	ULONG			time_to_think;
 	ULONG			remains_eat;
 	int				fork_r;
 	int				fork_l;
@@ -77,6 +79,7 @@ void	*routine(void *philo);
 void	describe_end(t_philo *philos);
 int		eating(t_philo *philo);
 int		sleeping(t_philo *philo);
+int		thinking(t_philo *philo);
 int		forks_available(t_philo *philo);
 
 int		start_monitor(t_table *table);

@@ -58,6 +58,7 @@ t_table	*init_table(int eat_limit, char **args)
 	table->time_to_die = ft_atoi(args[2]);
 	table->time_to_eat = ft_atoi(args[3]);
 	table->time_to_sleep = ft_atoi(args[4]);
+	table->time_to_think = table->time_to_eat - table->time_to_sleep + 2;
 	//table->start_time = get_time();
 	table->start_time = get_time() + 30;
 	if (eat_limit)
@@ -93,6 +94,8 @@ t_philo	*init_philos(t_table *table)
 		else
 			philos[i].fork_l = i - 1;
 
+		//philos[i].fork_r = i + 1 % table->nb_philo;
+		//philos[i].fork_l = i % table->nb_philo;
 		pthread_mutex_init(&philos[i].mut_time_to_die, NULL);
 
 		if (pthread_create(&philos[i].thread, NULL, routine, philos + i))

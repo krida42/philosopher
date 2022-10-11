@@ -24,12 +24,31 @@ static void	move_fork(t_philo *philo, int take)
 		pthread_mutex_unlock(table->forks + philo->fork_l);
 		return ;
 	}
-	pthread_mutex_lock(table->forks + philo->fork_l);
-	pthread_mutex_lock(table->forks + philo->fork_r);
 	pthread_mutex_lock(&philo->table->mut_display);
-	printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
-	printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+	if (philo->id % 2)
+	{
+		pthread_mutex_lock(table->forks + philo->fork_r);
+		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+		pthread_mutex_lock(table->forks + philo->fork_l);
+		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+	}
+	else
+	{
+		pthread_mutex_lock(table->forks + philo->fork_l);
+		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+		pthread_mutex_lock(table->forks + philo->fork_r);
+		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+	}
 	pthread_mutex_unlock(&philo->table->mut_display);
+
+	/*
+		pthread_mutex_lock(table->forks + philo->fork_l);
+		pthread_mutex_lock(table->forks + philo->fork_r);
+	*/
+	//pthread_mutex_lock(&philo->table->mut_display);
+	//printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+	//printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+	//pthread_mutex_unlock(&philo->table->mut_display);
 }
 
 static void	set_state(t_philo *philo, int state)
@@ -37,8 +56,11 @@ static void	set_state(t_philo *philo, int state)
 	const ULONG	timestamp = get_time() - philo->table->start_time;
 
 	pthread_mutex_lock(&philo->table->mut_display);
-	if (state == 0)
+	if (state == THINK)
+	{
+		philo->time_to_think = philo->table->nb_philo % 2 ? get_time() + philo->table->time_to_think : 0;
 		printf("%lu %d is thinking\n", timestamp, philo->id + 1);
+	}
 	else if (state == EAT)
 	{
 		philo->time_to_eat = get_time() + philo->table->time_to_eat;
@@ -73,11 +95,11 @@ static void	do_action(t_philo *philo)
 		first_action(philo);
 	else if (philo->state == THINK && philo->table->nb_philo > 1)
 	{
-		//if (forks_available(philo))// VOIR ICI 
-		//	{
-		move_fork(philo, 1);
-		set_state(philo, EAT);
-		//	}
+		if (!thinking(philo))
+		{
+			move_fork(philo, 1);
+			set_state(philo, EAT);
+		}
 	}
 	else if (philo->state == EAT)
 	{
@@ -107,11 +129,11 @@ void	*routine(void *philo_p)
 	pthread_mutex_unlock(&philo->mut_time_to_die);
 	while (1)
 	{
-		//	pthread_mutex_lock(&philo->table->mut_is_dead);
-		//	if (get_time() >= philo->time_to_die)
-		//		philo->table->is_dead = 1;
-		//	pthread_mutex_unlock(&philo->table->mut_is_dead);
 		pthread_mutex_lock(&philo->table->mut_is_dead);
+		if (get_time() >= philo->time_to_die)
+			philo->table->is_dead = 1;
+		//pthread_mutex_unlock(&philo->table->mut_is_dead);
+		//pthread_mutex_lock(&philo->table->mut_is_dead);
 		if (philo->table->is_dead || philo->remains_eat == 0)
 		{
 			pthread_mutex_unlock(&philo->table->mut_is_dead);
