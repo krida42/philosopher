@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
 SANI = -g
-SANI = -g -fsanitize=thread
+#SANI = -g -fsanitize=thread
 #SANI = -g -fsanitize=address
 NAME = philo
 INC_PATH = includes/

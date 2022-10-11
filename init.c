@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/09 13:28:56 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:25:27 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	free_philos(t_philo *philos)
 	free(philos);
 }
 
+
 static int	*init_forks(t_table *table)
 {
 	int	i;
@@ -58,7 +59,7 @@ t_table	*init_table(int eat_limit, char **args)
 	table->time_to_eat = ft_atoi(args[3]);
 	table->time_to_sleep = ft_atoi(args[4]);
 	//table->start_time = get_time();
-	table->start_time = get_time() + 10;
+	table->start_time = get_time() + 30;
 	if (eat_limit)
 		table->nb_must_eat = ft_atoi(args[5]);
 	else
@@ -84,6 +85,7 @@ t_philo	*init_philos(t_table *table)
 		philos[i].id = i;
 		philos[i].state = -1;
 		//philos[i].time_to_die = get_time() + table->time_to_die;
+		philos[i].time_to_die = 0;
 		philos[i].remains_eat = table->nb_must_eat;
 		philos[i].fork_r = i;
 		if (i == 0)

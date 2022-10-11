@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/09 13:36:05 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:28:53 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	*routine(void *philo_p)
 	philo = philo_p;
 
 	while (get_time() < philo->table->start_time)
-		;
+		usleep(1000);
 	pthread_mutex_lock(&philo->mut_time_to_die);
 	philo->time_to_die = get_time() + philo->table->time_to_die;
 	pthread_mutex_unlock(&philo->mut_time_to_die);
