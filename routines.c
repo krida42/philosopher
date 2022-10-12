@@ -6,40 +6,51 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/20 01:48:54 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/11 17:28:53 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/12 20:32:29 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <bits/pthreadtypes.h>
 #include <pthread.h>
 
 static void	move_fork(t_philo *philo, int take)
 {
 	const t_table	*table = philo->table;
-	const ULONG		timestamp = get_time() - philo->table->start_time;
+	ULONG		timestamp = get_time() - philo->table->start_time;
+	pthread_mutex_t	*mut = &philo->table->mut_display;
 
 	if (!take)
 	{
+		//printf("Avant le unlock\n");
 		pthread_mutex_unlock(table->forks + philo->fork_r);
 		pthread_mutex_unlock(table->forks + philo->fork_l);
+		//printf("apres le unlock\n");
 		return ;
 	}
-	pthread_mutex_lock(&philo->table->mut_display);
+	//printf("id : %d,  r: %d\n", philo->id, philo->fork_r);
+	//printf("id : %d,  l: %d\n", philo->id, philo->fork_l);
+
 	if (philo->id % 2)
 	{
 		pthread_mutex_lock(table->forks + philo->fork_r);
-		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+
+		timestamp = get_time() - philo->table->start_time;
+		print_status("%lu %d has taken a fork\n", timestamp, philo->id + 1, mut);
 		pthread_mutex_lock(table->forks + philo->fork_l);
-		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+
+		timestamp = get_time() - philo->table->start_time;
+		print_status("%lu %d has taken a fork\n", timestamp, philo->id + 1, mut);
 	}
 	else
 	{
 		pthread_mutex_lock(table->forks + philo->fork_l);
-		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+		timestamp = get_time() - philo->table->start_time;
+		print_status("%lu %d has taken a fork\n", timestamp, philo->id + 1, mut);
 		pthread_mutex_lock(table->forks + philo->fork_r);
-		printf("%lu %d has taken a fork\n", timestamp, philo->id + 1);
+		timestamp = get_time() - philo->table->start_time;
+		print_status("%lu %d has taken a fork\n", timestamp, philo->id + 1, mut);
 	}
-	pthread_mutex_unlock(&philo->table->mut_display);
 
 	/*
 		pthread_mutex_lock(table->forks + philo->fork_l);
@@ -53,13 +64,15 @@ static void	move_fork(t_philo *philo, int take)
 
 static void	set_state(t_philo *philo, int state)
 {
-	const ULONG	timestamp = get_time() - philo->table->start_time;
+	ULONG	timestamp = get_time() - philo->table->start_time;
+	pthread_mutex_t	*mut = &philo->table->mut_display;
 
-	pthread_mutex_lock(&philo->table->mut_display);
 	if (state == THINK)
 	{
 		philo->time_to_think = philo->table->nb_philo % 2 ? get_time() + philo->table->time_to_think : 0;
-		printf("%lu %d is thinking\n", timestamp, philo->id + 1);
+
+		timestamp = get_time() - philo->table->start_time;
+		print_status("%lu %d is thinking\n", timestamp, philo->id + 1, mut);
 	}
 	else if (state == EAT)
 	{
@@ -67,15 +80,18 @@ static void	set_state(t_philo *philo, int state)
 		pthread_mutex_lock(&philo->mut_time_to_die);
 		philo->time_to_die = get_time() + philo->table->time_to_die;
 		pthread_mutex_unlock(&philo->mut_time_to_die);
-		printf("%lu %d is eating\n", timestamp, philo->id + 1);
+
+		timestamp = get_time() - philo->table->start_time;
+		print_status("%lu %d is eating\n", timestamp, philo->id + 1, mut);
 	}
 	else if (state == SLEEP)
 	{
 		philo->time_to_sleep = get_time() + philo->table->time_to_sleep;
-		printf("%lu %d is sleeping\n", timestamp, philo->id + 1);
+
+		timestamp = get_time() - philo->table->start_time;
+		print_status("%lu %d is sleeping\n", timestamp, philo->id + 1, mut);
 	}
 	philo->state = state;
-	pthread_mutex_unlock(&philo->table->mut_display);
 }
 
 static void	first_action(t_philo *philo)

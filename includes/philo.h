@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/09 13:18:08 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:51:12 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ ULONG	get_time(void);
 void	my_sleep(ULONG ms);
 
 int		ft_atoi(const char *s);
+void	print_status(char *fmt, ULONG timestamp, int id, pthread_mutex_t *mut);
 
 void	*routine(void *philo);
 

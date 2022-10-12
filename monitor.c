@@ -8,7 +8,7 @@ void	*monitor_routine(void *table_p)
 
 	table = table_p;
 
-	printf("MONOTOR\n");
+	//printf("MONOTOR\n");
 	while (get_time() < (table->start_time + 8))
 		usleep(2000);
 	while (1)
@@ -17,8 +17,8 @@ void	*monitor_routine(void *table_p)
 		while (table->philos[++i].id != -1)
 		{
 			pthread_mutex_lock(&table->philos[i].mut_time_to_die);
-			if (table->philos[i].time_to_die == 0)
-				printf(RED" - - - - TIME TO DIE NOT SET - - - -\n"WHITE);
+			//if (table->philos[i].time_to_die == 0)
+				//printf(RED" - - - - TIME TO DIE NOT SET - - - -\n"WHITE);
 			if (table->philos[i].time_to_die > 0 && get_time() >= table->philos[i].time_to_die)
 			{
 				pthread_mutex_unlock(&table->philos[i].mut_time_to_die);

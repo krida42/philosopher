@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/11 17:25:27 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/12 20:31:56 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,13 +89,13 @@ t_philo	*init_philos(t_table *table)
 		philos[i].time_to_die = 0;
 		philos[i].remains_eat = table->nb_must_eat;
 		philos[i].fork_r = i;
-		if (i == 0)
-			philos[i].fork_l = table->nb_philo - 1;
-		else
-			philos[i].fork_l = i - 1;
+		//if (i == 0)
+		//	philos[i].fork_l = table->nb_philo - 1;
+		//else
+		//	philos[i].fork_l = i - 1;
 
-		//philos[i].fork_r = i + 1 % table->nb_philo;
-		//philos[i].fork_l = i % table->nb_philo;
+		philos[i].fork_l = (table->nb_philo - 1 + i) % table->nb_philo;
+		philos[i].fork_r = i;
 		pthread_mutex_init(&philos[i].mut_time_to_die, NULL);
 
 		if (pthread_create(&philos[i].thread, NULL, routine, philos + i))
