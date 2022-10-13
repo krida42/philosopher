@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/21 17:53:16 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/13 17:05:40 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:26:22 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	describe_end(t_philo *philos)
 
 	counter = 0;
 	i = -1;
-	printf(RED"- - - JE SUIS LA - - -- \n"WHITE);
 	while (philos[++i].id != -1 && philos[i].remains_eat == 0)
 		counter++;
 	if (counter == table->nb_philo)

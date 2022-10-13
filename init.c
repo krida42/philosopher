@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/13 17:38:01 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:33:58 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_philo	*init_philos(t_table *table)
 		philos[i].fork_l = (table->nb_philo - 1 + i) % table->nb_philo;
 		pthread_mutex_init(&philos[i].mut_time_to_die, NULL);
 		if (pthread_create(&philos[i].thread, NULL, routine, philos + i))
-			return (printf("failed to create thread !\n"), NULL);
+			return (printf(RED"Failed to create thread !\n"WHITE"\n"), NULL);
 	}
 	philos[i].id = -1;
 	return (philos);
