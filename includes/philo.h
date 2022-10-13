@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/13 17:35:26 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/13 20:47:29 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ int		forks_available(t_philo *philo);
 int		start_monitor(t_table *table);
 
 void	wait_routine(t_philo *philo);
+
+int	iserr_args(char **argv);
 
 void	blue(void);
 void	purple(void);
