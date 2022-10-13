@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/12 19:51:12 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:35:26 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ ULONG	get_time(void);
 void	my_sleep(ULONG ms);
 
 int		ft_atoi(const char *s);
-void	print_status(char *fmt, ULONG timestamp, int id, pthread_mutex_t *mut);
+void	print_status(char *fmt, t_philo *philo);
+ULONG	get_imestamp(ULONG start_time);
 
 void	*routine(void *philo);
 
@@ -84,6 +85,8 @@ int		thinking(t_philo *philo);
 int		forks_available(t_philo *philo);
 
 int		start_monitor(t_table *table);
+
+void	wait_routine(t_philo *philo);
 
 void	blue(void);
 void	purple(void);

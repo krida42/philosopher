@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 21:31:28 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/12 20:25:59 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/13 19:21:53 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,17 @@ int	ft_atoi(const char *str)
 	return (nbr * signe);
 }
 
-void	print_status(char *fmt, ULONG timestamp, int id, pthread_mutex_t *mut)
+ULONG	get_timestamp(const ULONG start_time)
 {
-	//pthread_mutex_lock(mut);
-	(void)mut;
-	printf(fmt, timestamp, id);
-	//pthread_mutex_unlock(mut);
+	return (get_time() - start_time);
+}
+
+void	print_status(char *fmt, t_philo *philo)
+{
+	t_table	*table;
+
+	table = philo->table;
+	pthread_mutex_lock(&table->mut_display);
+	printf(fmt, get_timestamp(table->start_time), philo->id + 1);
+	pthread_mutex_unlock(&table->mut_display);
 }

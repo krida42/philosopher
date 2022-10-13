@@ -6,7 +6,7 @@
 /*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/18 17:17:55 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/12 20:31:56 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:38:01 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,10 @@ void	free_philos(t_philo *philos)
 	int	i;
 
 	i = -1;
-	//while (philos[++i].id != -1)
-	//	pthread_mutex_destroy(&philos[i].mutex);
 	while (philos[++i].id != -1)
 		pthread_mutex_destroy(&philos[i].mut_time_to_die);
 	free(philos);
 }
-
 
 static int	*init_forks(t_table *table)
 {
@@ -59,13 +56,11 @@ t_table	*init_table(int eat_limit, char **args)
 	table->time_to_eat = ft_atoi(args[3]);
 	table->time_to_sleep = ft_atoi(args[4]);
 	table->time_to_think = table->time_to_eat - table->time_to_sleep + 2;
-	//table->start_time = get_time();
 	table->start_time = get_time() + 30;
 	if (eat_limit)
 		table->nb_must_eat = ft_atoi(args[5]);
 	else
 		table->nb_must_eat = -42;
-	
 	pthread_mutex_init(&table->mut_display, NULL);
 	pthread_mutex_init(&table->mut_is_dead, NULL);
 	pthread_mutex_init(&table->mut_start, NULL);
@@ -85,19 +80,11 @@ t_philo	*init_philos(t_table *table)
 		philos[i].table = table;
 		philos[i].id = i;
 		philos[i].state = -1;
-		//philos[i].time_to_die = get_time() + table->time_to_die;
 		philos[i].time_to_die = 0;
 		philos[i].remains_eat = table->nb_must_eat;
 		philos[i].fork_r = i;
-		//if (i == 0)
-		//	philos[i].fork_l = table->nb_philo - 1;
-		//else
-		//	philos[i].fork_l = i - 1;
-
 		philos[i].fork_l = (table->nb_philo - 1 + i) % table->nb_philo;
-		philos[i].fork_r = i;
 		pthread_mutex_init(&philos[i].mut_time_to_die, NULL);
-
 		if (pthread_create(&philos[i].thread, NULL, routine, philos + i))
 			return (printf("failed to create thread !\n"), NULL);
 	}
