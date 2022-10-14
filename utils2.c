@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kisikaya <kisikaya@student.42.fr>          +#+  +:+       +#+        */
+/*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/18 21:31:28 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/14 17:20:15 by kisikaya         ###   ########.fr       */
+/*   Created: 2022/10/14 17:16:39 by kisikaya          #+#    #+#             */
+/*   Updated: 2022/10/14 17:16:40 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <bits/pthreadtypes.h>
-#include <pthread.h>
-#include <stdio.h>
 
-int	ft_atoi(const char *str)
+static size_t	ft_strlen(const char *str)
 {
-	int	signe;
-	int	nbr;
+	size_t	i;
+
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+static long	ft_latoi(const char *str)
+{
+	int			signe;
+	long		nbr;
 
 	nbr = 0;
 	signe = 1;
@@ -36,17 +43,14 @@ int	ft_atoi(const char *str)
 	return (nbr * signe);
 }
 
-ULONG	get_timestamp(const ULONG start_time)
+int	is_there_ouflow(char **valstr)
 {
-	return (get_time() - start_time);
-}
-
-void	print_status(char *fmt, t_philo *philo)
-{
-	t_table	*table;
-
-	table = philo->table;
-	pthread_mutex_lock(&table->mut_display);
-	printf(fmt, get_timestamp(table->start_time), philo->id + 1);
-	pthread_mutex_unlock(&table->mut_display);
+	while (*valstr)
+	{
+		if (ft_latoi(*valstr) < INT_MIN || ft_latoi(*valstr) > INT_MAX
+			|| ft_strlen(*valstr) > 11)
+			return (1);
+		valstr++;
+	}
+	return (0);
 }

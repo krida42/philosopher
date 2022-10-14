@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:33:58 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/13 20:47:29 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:35:52 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define ULONG unsigned long
 # define BLUE "\001\033[1;34m\002"
@@ -88,7 +89,9 @@ int		start_monitor(t_table *table);
 
 void	wait_routine(t_philo *philo);
 
-int	iserr_args(char **argv);
+int		iserr_args(char **argv);
+
+int		is_there_ouflow(char **valstr);
 
 void	blue(void);
 void	purple(void);
