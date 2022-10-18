@@ -6,7 +6,7 @@
 /*   By: kisikaya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/17 19:53:41 by kisikaya          #+#    #+#             */
-/*   Updated: 2022/10/13 20:52:15 by kisikaya         ###   ########.fr       */
+/*   Updated: 2022/10/18 16:52:42 by kisikaya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int argc, char **argv)
 	t_philo	*philos;
 	int		i;
 
-	puts("- - - - - - - - - - - - - - - - - - -\n");
 	if (argc != 5 && argc != 6)
 		return (printf(RED"Pas le bon nombre d'argument !\n"WHITE));
 	if (iserr_args(argv + 1))
